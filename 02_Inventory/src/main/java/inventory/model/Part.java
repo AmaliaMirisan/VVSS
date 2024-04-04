@@ -83,7 +83,7 @@ public abstract class Part {
      * @param errorMessage
      * @return 
      */
-    public static String isValidPart(String name, double price, int inStock, int min, int max, String errorMessage) {
+    public static String isValidPart(String name, double price, int inStock, int min, int max, String errorMessage) throws IllegalArgumentException{
         if(name.equals("")) {
             errorMessage += "A name has not been entered. ";
         }
@@ -102,7 +102,10 @@ public abstract class Part {
         if(inStock > max) {
             errorMessage += "Inventory level is higher than the maximum value. ";
         }
-        return errorMessage;
+        if (!errorMessage.isEmpty()) {
+            throw new IllegalArgumentException(errorMessage);
+        }
+        return "";
     }
     @Override
     public String toString() {

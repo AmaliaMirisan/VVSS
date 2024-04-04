@@ -224,6 +224,8 @@ public class AddProductController implements Initializable, Controller {
             alert.setHeaderText("Error!");
             alert.setContentText("Form contains blank field.");
             alert.showAndWait();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
     }

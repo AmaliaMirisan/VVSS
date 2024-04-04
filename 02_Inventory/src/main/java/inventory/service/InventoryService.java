@@ -4,17 +4,29 @@ import inventory.model.*;
 import inventory.repository.InventoryRepository;
 import javafx.collections.ObservableList;
 
+import static inventory.model.Part.isValidPart;
+
 public class InventoryService {
 
     private InventoryRepository repo;
     public InventoryService(InventoryRepository repo){
         this.repo =repo;
     }
+    public void addInhousePart(String name, double price, int inStock, int min, int max, int partDynamicValue) throws IllegalArgumentException {
+        String validationError = isValidPart(name, price, inStock, min, max, "");
+        if (!validationError.isEmpty()) {
+            throw new IllegalArgumentException(validationError);
+        }
 
-    public void addInhousePart(String name, double price, int inStock, int min, int  max, int partDynamicValue){
+        // Dacă validarea trece, continuă cu crearea și adăugarea piesei
         InhousePart inhousePart = new InhousePart(repo.getAutoPartId(), name, price, inStock, min, max, partDynamicValue);
         repo.addPart(inhousePart);
     }
+
+    /*public void addInhousePart(String name, double price, int inStock, int min, int  max, int partDynamicValue){
+        InhousePart inhousePart = new InhousePart(repo.getAutoPartId(), name, price, inStock, min, max, partDynamicValue);
+        repo.addPart(inhousePart);
+    }*/
     public void addOutsourcePart(String name, double price, int inStock, int min, int  max, String partDynamicValue){
         OutsourcedPart outsourcedPart = new OutsourcedPart(repo.getAutoPartId(), name, price, inStock, min, max, partDynamicValue);
         repo.addPart(outsourcedPart);
