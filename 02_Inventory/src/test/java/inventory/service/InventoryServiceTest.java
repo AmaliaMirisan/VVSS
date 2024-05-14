@@ -2,6 +2,7 @@ package inventory.service;
 
 
 import inventory.repository.InventoryRepository;
+import inventory.repository.PartRepository;
 import org.junit.jupiter.api.*;
 
 class InventoryServiceTest {
@@ -14,7 +15,8 @@ class InventoryServiceTest {
     private int partDynamicValue = 1;
 
     private final InventoryRepository invRepo = new InventoryRepository();
-    private final InventoryService service = new InventoryService(invRepo);
+    private final PartRepository partRepo = new PartRepository("data/parts,txt");
+    private final InventoryService service = new InventoryService(invRepo, partRepo);
     int partsSize = service.getAllParts().size();
 
     @Test

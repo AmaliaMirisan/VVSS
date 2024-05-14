@@ -4,6 +4,8 @@ package inventory.model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class Inventory {
     
     // Declare fields
@@ -52,7 +54,7 @@ public class Inventory {
         }
         return null;
     }
-    
+
     /**
      * Update product at given index
      * @param index
@@ -155,5 +157,12 @@ public class Inventory {
     public void setAutoProductId(int id){
         autoProductId=id;
     }
-    
+
+    /**
+     * Getter for Product Observable List
+     * @return
+     */
+    public ObservableList<Product> getAllProducts() {
+        return products;
+    }
 }

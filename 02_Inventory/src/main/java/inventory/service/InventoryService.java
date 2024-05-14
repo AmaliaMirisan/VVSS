@@ -1,16 +1,22 @@
 package inventory.service;
 
+import inventory.exceptions.PartException;
 import inventory.model.*;
 import inventory.repository.InventoryRepository;
+import inventory.repository.PartRepository;
 import javafx.collections.ObservableList;
+
+import java.util.List;
 
 import static inventory.model.Part.isValidPart;
 
 public class InventoryService {
 
     private InventoryRepository repo;
-    public InventoryService(InventoryRepository repo){
+    private PartRepository partRepo;
+    public InventoryService(InventoryRepository repo, PartRepository partRepo){
         this.repo =repo;
+        this.partRepo =partRepo;
     }
     public void addInhousePart(String name, double price, int inStock, int min, int max, int partDynamicValue) throws IllegalArgumentException {
         String validationError = isValidPart(name, price, inStock, min, max, "");
@@ -36,9 +42,15 @@ public class InventoryService {
         Product product = new Product(repo.getAutoProductId(), name, price, inStock, min, max, addParts);
         repo.addProduct(product);
     }
-
+    public void addPart(String name, double price, int inStock, int min, int  max) throws PartException {
+        Part part = new Part(repo.getAutoProductId(), name, price, inStock, min, max);
+        partRepo.add(part);
+    }
     public ObservableList<Part> getAllParts() {
-        return repo.getAllParts();
+        return (ObservableList<Part>) partRepo.getAll();
+    }
+    public List<Part> getParts() {
+        return partRepo.getAll();
     }
 
     public ObservableList<Product> getAllProducts() {
