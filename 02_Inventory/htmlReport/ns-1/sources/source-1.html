@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > InventoryTest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">inventory.model</a>
+</div>
+
+<h1>Coverage Summary for Class: InventoryTest (inventory.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">InventoryTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.9%
+  </span>
+  <span class="absValue">
+    (16/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package inventory.model;
+&nbsp;
+&nbsp;import inventory.repository.InventoryRepository;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import javafx.collections.FXCollections;
+&nbsp;import javafx.collections.ObservableList;
+&nbsp;import org.junit.jupiter.api.BeforeEach;
+&nbsp;import org.junit.jupiter.api.DisplayName;
+&nbsp;import org.junit.jupiter.api.Test;
+&nbsp;
+&nbsp;import static org.junit.jupiter.api.Assertions.*;
+&nbsp;
+<b class="fc">&nbsp;class InventoryTest {</b>
+&nbsp;    private Inventory inventory;
+&nbsp;    private InventoryRepository repo;
+&nbsp;    private Product product;
+<b class="fc">&nbsp;    private ObservableList&lt;Part&gt; partList = FXCollections.observableArrayList();</b>
+&nbsp;
+<b class="fc">&nbsp;    InventoryTest() {</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @BeforeEach
+&nbsp;    void setUp() {
+&nbsp;        try {
+<b class="fc">&nbsp;            this.repo = new InventoryRepository();</b>
+<b class="fc">&nbsp;            this.inventory = this.repo.getInventory();</b>
+<b class="nc">&nbsp;        } catch (Exception var2) {</b>
+<b class="nc">&nbsp;            var2.printStackTrace();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    @DisplayName(&quot;Empty search item&quot;)
+&nbsp;    void lookUpProduct_TC01() {
+<b class="fc">&nbsp;        assert this.inventory.lookupProduct(&quot;&quot;) != null;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    @DisplayName(&quot;Search item found&quot;)
+&nbsp;    void lookUpProduct_TC02() {
+<b class="fc">&nbsp;        assert this.inventory.lookupProduct(&quot;Clock&quot;).getProductId() == 1;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    @DisplayName(&quot;Search item not found&quot;)
+&nbsp;    void lookUpProduct_TC03() {
+<b class="fc">&nbsp;        assert this.inventory.lookupProduct(&quot;TEST&quot;) == null;</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    @Test
+&nbsp;    @DisplayName(&quot;Empty list&quot;)
+&nbsp;    void lookUpProduct_TC04() {
+<b class="fc">&nbsp;        List&lt;Product&gt; prods = new ArrayList&lt;&gt;(this.inventory.getAllProducts());  // Copie pentru evitarea ConcurrentModificationException</b>
+<b class="fc">&nbsp;        for (Product prod : prods) {</b>
+<b class="fc">&nbsp;            this.inventory.removeProduct(prod);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        Product result = this.inventory.lookupProduct(&quot;TEST&quot;);</b>
+<b class="fc">&nbsp;        assertNotNull(result, &quot;Expected a default product, but got null&quot;); // Verific? c? nu returneaz? null</b>
+<b class="fc">&nbsp;        assertEquals(0, result.getProductId(), &quot;Expected product ID to be 0 for non-existing product search&quot;); // Verific? c? ID-ul este 0</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-17 21:00</div>
+</div>
+</body>
+</html>
