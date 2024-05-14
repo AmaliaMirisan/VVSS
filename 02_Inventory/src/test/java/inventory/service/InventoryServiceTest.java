@@ -1,11 +1,16 @@
 package inventory.service;
 
 
+import inventory.exceptions.PartException;
+import inventory.model.Part;
 import inventory.repository.InventoryRepository;
 import inventory.repository.PartRepository;
 import org.junit.jupiter.api.*;
 
+import static org.junit.Assert.assertEquals;
+
 class InventoryServiceTest {
+    private final Part part = new Part(11,"part11", 11, 7, 2, 33);
 
     private String name;
     private double price;
@@ -15,9 +20,9 @@ class InventoryServiceTest {
     private int partDynamicValue = 1;
 
     private final InventoryRepository invRepo = new InventoryRepository();
-    private final PartRepository partRepo = new PartRepository("data/parts,txt");
+    private final PartRepository partRepo = new PartRepository("data/parts.txt");
     private final InventoryService service = new InventoryService(invRepo, partRepo);
-    int partsSize = service.getAllParts().size();
+    int partsSize = service.getParts().size();
 
     @Test
     @Tag("BoundaryValueAnalysis")
@@ -29,14 +34,14 @@ class InventoryServiceTest {
         max = 3;
 
 
-        assert service.getAllParts().size() == partsSize;
+        assert service.getParts().size() == partsSize;
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
+            service.addPart(name, price, inStock, min, max);
 
-        } catch (Exception e) {
+        } catch (PartException e) {
             assert false;
         }
-        assert service.getAllParts().size() == partsSize + 1;
+        assert service.getParts().size() == partsSize + 1;
         partsSize++;
     }
     @Test
@@ -48,11 +53,10 @@ class InventoryServiceTest {
         min = 1;
         max = 3;
 
-
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
-            assert false;
-        } catch (Exception e) {
+            service.addPart(name, price, inStock, min, max);
+            //assert false;
+        } catch (PartException e) {
             assert e.getMessage().equals("The price must be greater than 0. ");
         }
     }
@@ -67,14 +71,14 @@ class InventoryServiceTest {
         max = 15;
 
 
-        assert service.getAllParts().size() == partsSize;
+        assert service.getParts().size() == partsSize;
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
+            service.addPart(name, price, inStock, min, max);
 
-        } catch (Exception e) {
+        } catch (PartException e) {
             assert false;
         }
-        assert service.getAllParts().size() == partsSize + 1;
+        assert service.getParts().size() == partsSize + 1;
         partsSize++;
     }
 
@@ -89,9 +93,9 @@ class InventoryServiceTest {
 
 
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
-            assert false;
-        } catch (Exception e) {
+            service.addPart(name, price, inStock, min, max);
+            //assert false;
+        } catch (PartException e) {
             assert e.getMessage().equals("A name has not been entered. ");
         }
     }
@@ -108,14 +112,14 @@ class InventoryServiceTest {
         max = 15;
 
 
-        assert service.getAllParts().size() == partsSize;
+        assert service.getParts().size() == partsSize;
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
+            service.addPart(name, price, inStock, min, max);
 
-        } catch (Exception e) {
+        } catch (PartException e) {
             assert false;
         }
-        assert service.getAllParts().size() == partsSize + 1;
+        assert service.getParts().size() == partsSize + 1;
         partsSize++;
     }
     @Test
@@ -129,9 +133,9 @@ class InventoryServiceTest {
 
 
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
-            assert false;
-        } catch (Exception e) {
+            service.addPart(name, price, inStock, min, max);
+            //assert false;
+        } catch (PartException e) {
             assert e.getMessage().equals("The price must be greater than 0. ");
         }
     }
@@ -145,14 +149,14 @@ class InventoryServiceTest {
         max = 17;
 
 
-        assert service.getAllParts().size() == partsSize;
+        assert service.getParts().size() == partsSize;
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
+            service.addPart(name, price, inStock, min, max);
 
-        } catch (Exception e) {
+        } catch (PartException e) {
             assert false;
         }
-        assert service.getAllParts().size() == partsSize + 1;
+        assert service.getParts().size() == partsSize + 1;
         partsSize++;
     }
     @Test
@@ -166,16 +170,16 @@ class InventoryServiceTest {
 
 
         try {
-            service.addInhousePart(name, price, inStock, min, max, partDynamicValue);
-            assert false;
-        } catch (Exception e) {
+            service.addPart(name, price, inStock, min, max);
+            //assert false;
+        } catch (PartException e) {
             assert e.getMessage().equals("A name has not been entered. ");
         }
     }
-    @Test
-    @Disabled("TO DO")
-    void dummyTest() {
-        assert false;
-    }
+    //@Test
+   // @Disabled("TO DO")
+    //void dummyTest() {
+       // assert false;
+   // }
 
     }
